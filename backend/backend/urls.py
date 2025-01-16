@@ -19,12 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
 
+
 # Временная главная страница
 def home(request):
     return JsonResponse({"message": "Welcome to your Django-React app!"})
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),  # Подключаем маршруты из приложения 'api'
-    path('', home),  # Добавляем маршрут для главной страницы
+    path('', home),  # Главная страница
 ]
