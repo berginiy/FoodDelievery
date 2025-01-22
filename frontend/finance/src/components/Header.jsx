@@ -1,22 +1,60 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Импортируем Link из react-router-dom
+import { useNavigate } from "react-router-dom"; // Импортируем useNavigate
 import "../styles/Header.css"; // Подключаем стили
 
 function Header() {
+    const navigate = useNavigate(); // Используем useNavigate для навигации
+
     return (
         <header className="header">
             <div className="logo">
-                <h1 className="logo-link">Foo</h1>
+                <h1
+                    className="logo-link"
+                    onClick={() => navigate("/")} // Добавляем обработчик клика
+                    style={{ cursor: "pointer" }} // Добавляем курсор "pointer" для указания, что это кликабельный элемент
+                >
+                    Foo
+                </h1>
             </div>
             <nav className="nav">
-                <Link to="/" className="nav-link">Home</Link>
-                <Link to="/menu" className="nav-link">Menu</Link>
-                <Link to="/shop" className="nav-link">Shop</Link>
-                <Link to="/contact" className="nav-link">Contact</Link>
+                <button
+                    onClick={() => navigate("/")}
+                    className="nav-link"
+                >
+                    Home
+                </button>
+                <button
+                    onClick={() => navigate("/menu")}
+                    className="nav-link"
+                >
+                    Menu
+                </button>
+                <button
+                    onClick={() => navigate("/shop")}
+                    className="nav-link"
+                >
+                    Shop
+                </button>
+                <button
+                    onClick={() => navigate("/contact")}
+                    className="nav-link"
+                >
+                    Contact
+                </button>
             </nav>
             <div className="auth-container">
-                <Link to="/sign-in" className="auth-link">Sign In</Link>
-                <Link to="/sign-up" className="auth-link">Sign Up</Link>
+                <button
+                    onClick={() => navigate("/sign-in")}
+                    className="auth-link"
+                >
+                    Sign In
+                </button>
+                <button
+                    onClick={() => navigate("/sign-up")}
+                    className="auth-link"
+                >
+                    Sign Up
+                </button>
             </div>
         </header>
     );

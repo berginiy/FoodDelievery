@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+from api.models import MenuItem
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,3 +17,9 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+
+class MenuItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MenuItem
+        fields = ['name', 'description', 'price', 'image']

@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'api',
 ]
@@ -122,5 +123,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",  # фронтенд
 ]
 
-# Разрешение использования всех источников для CORS (если нужно)
-CORS_ALLOW_ALL_ORIGINS = False  # Важно установить False, если не нужно разрешать все источники для безопасности
+CORS_ALLOW_ALL_ORIGINS = True
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

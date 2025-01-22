@@ -1,0 +1,87 @@
+.menu-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f4fcf4;
+}
+
+.menu-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.menu-subtitle {
+    font-size: 1rem;
+    color: #718096;
+    margin-bottom: 2rem;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.menu-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+}
+
+.menu-image {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.menu-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.menu-price {
+    font-size: 1rem;
+    color: #48bb78;
+    margin-bottom: 1rem;
+}
+
+.menu-add-btn {
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-add-btn:hover {
+    background-color: #38a169;
+}
+
+.menu-all-btn {
+    background-color: #ffba08;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-all-btn:hover {
+    background-color: #e0a500;
+}
