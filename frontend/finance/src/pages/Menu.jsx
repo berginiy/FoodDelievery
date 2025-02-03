@@ -10,17 +10,24 @@ const MenuPage = () => {
     // Получение данных из API
     useEffect(() => {
         axios
-            .get("http://127.0.0.1:8000/api/menu/") // Эндпоинт API
+            .get("http://127.0.0.1:8000/api/menu/")
             .then((response) => {
+                console.log(response.data);
+                const ids = response.data.map(dish => dish.id);
+                const uniqueIds = new Set(ids);
+                if (uniqueIds.size !== ids.length) {
+                    console.warn("Есть дубликаты ID!");
+                }
                 setMenuItems(response.data);
-                setLoading(false); // Убираем загрузку
+                setLoading(false);
             })
             .catch((err) => {
                 console.error("Error fetching menu:", err);
                 setError("Failed to load menu. Try again later.");
-                setLoading(false); // Убираем загрузку при ошибке
+                setLoading(false);
             });
     }, []);
+
 
     // Если идёт загрузка
     if (loading) {
@@ -35,17 +42,16 @@ const MenuPage = () => {
     // Отображение данных из API
     return (
         <div className="menu-container">
-            {menuItems.map((dish) => (
-                <div className="menu-card" key={dish.id}>
+            {menuItems.map((dish, index) => (
+                <div className="menu-card" key={index}>
                     <img
-                        src={dish.image}
+                        src={`http://127.0.0.1:8000${dish.image}`}
                         alt={dish.name}
                         className="menu-image"
                     />
                     <h3 className="menu-card-title">{dish.name}</h3>
                     <p className="menu-description">{dish.description}</p>
                     <p className="menu-price">
-                        {/* Проверка: если price — число, используем toFixed */}
                         {typeof dish.price === "number"
                             ? `$${dish.price.toFixed(2)}`
                             : dish.price}
@@ -53,9 +59,9 @@ const MenuPage = () => {
                     <button className="menu-add-btn">+</button>
                 </div>
             ))}
+
         </div>
     );
-
 };
 
 export default MenuPage;

@@ -1,42 +1,38 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Хук для навигации
-import "../styles/SignIn.css"; // Стиль, если есть
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Импортируем контекст
+import "../styles/SignIn.css";
 
 function SignIn() {
-    const [email, setEmail] = useState(""); // Состояние для email
-    const [password, setPassword] = useState(""); // Состояние для пароля
-    const [error, setError] = useState(""); // Состояние для ошибок
-    const navigate = useNavigate(); // Хук для навигации после успешного входа
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const { signIn } = useAuth(); // Получаем функцию signIn из контекста
 
-    // Обработчик отправки формы
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Предотвращаем перезагрузку страницы при отправке формы
-        setError(""); // Очистка ошибок перед отправкой
+        e.preventDefault();
+        setError("");
 
         try {
-            // Отправляем запрос на сервер Django
             const response = await fetch("http://localhost:8000/api/signin/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username: email, password }), // Отправляем email и пароль
+                body: JSON.stringify({ username: email, password }),
             });
 
             if (response.ok) {
-                // Если ответ успешный, получаем токен
                 const data = await response.json();
-                // Сохраняем токен в localStorage
                 localStorage.setItem("token", data.token);
-                // Перенаправляем на главную страницу
+                signIn({ token: data.token }); // Обновляем состояние пользователя
                 navigate("/");
             } else {
-                // Если ошибка, показываем сообщение об ошибке
                 const errorData = await response.json();
                 setError(errorData.detail || "Invalid credentials.");
             }
         } catch (err) {
-            // Если ошибка запроса
             setError("Something went wrong. Please try again later.");
         }
     };
@@ -46,7 +42,7 @@ function SignIn() {
             <div className="signin-container">
                 <h1>Sign In</h1>
                 <form onSubmit={handleSubmit} className="signin-form">
-                    {error && <p className="error-message">{error}</p>} {/* Показываем ошибку, если она есть */}
+                    {error && <p className="error-message">{error}</p>}
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input

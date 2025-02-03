@@ -85,3 +85,12 @@
 .menu-all-btn:hover {
     background-color: #e0a500;
 }
+
+
+.menu-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}

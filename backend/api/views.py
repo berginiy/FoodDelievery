@@ -1,16 +1,17 @@
 # views.py (Django)
 from django.contrib.auth import authenticate
+from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from api.models import MenuItem
-from api.serializers import MenuItemSerializer
+from api.serializers import MenuItemSerializer, UserSerializer
 
 
 class RegisterView(APIView):
@@ -75,3 +76,28 @@ class MenuListView(APIView):
         menu_items = MenuItem.objects.all()
         serialized_data = MenuItemSerializer(menu_items, many=True).data
         return Response(serialized_data)
+
+
+class UserInfoView(APIView):
+    permission_classes = [IsAuthenticated]  # Только для авторизованных пользователей
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class UploadPictureView(APIView):
+    permission_classes = [IsAuthenticated]  # Только для авторизованных пользователей
+    parser_classes = [MultiPartParser]  # Для обработки загрузки файлов
+
+    def post(self, request):
+        user = request.user
+        picture = request.FILES.get('profile_picture')
+
+        if picture:
+            user.profile_picture = picture
+            user.save()
+            return Response({'message': 'Фото успешно загружено.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Файл не загружен.'}, status=status.HTTP_400_BAD_REQUEST)

@@ -1,61 +1,30 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Импортируем useNavigate
-import "../styles/Header.css"; // Подключаем стили
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../styles/Header.css";
 
 function Header() {
-    const navigate = useNavigate(); // Используем useNavigate для навигации
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     return (
-        <header className="header">
-            <div className="logo">
-                <h1
-                    className="logo-link"
-                    onClick={() => navigate("/")} // Добавляем обработчик клика
-                    style={{ cursor: "pointer" }} // Добавляем курсор "pointer" для указания, что это кликабельный элемент
-                >
-                    Foo
-                </h1>
-            </div>
-            <nav className="nav">
-                <button
-                    onClick={() => navigate("/")}
-                    className="nav-link"
-                >
-                    Home
-                </button>
-                <button
-                    onClick={() => navigate("/menu")}
-                    className="nav-link"
-                >
-                    Menu
-                </button>
-                <button
-                    onClick={() => navigate("/shop")}
-                    className="nav-link"
-                >
-                    Shop
-                </button>
-                <button
-                    onClick={() => navigate("/contact")}
-                    className="nav-link"
-                >
-                    Contact
-                </button>
+        <header className="hero">
+            <nav className="navbar">
+                <Link to="/" className="nav-link">Home</Link>
+                <Link to="/menu" className="nav-link">Menu</Link>
+
+                {user ? (
+                    <>
+                        <Link to="/personal-info" className="nav-link">Personal Information</Link>
+                        <button className="log-out-button" onClick={logout}>Log Out</button>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/sign-in" className="nav-link">Sign In</Link>
+                        <Link to="/sign-up" className="nav-link">Sign Up</Link>
+                    </>
+                )}
             </nav>
-            <div className="auth-container">
-                <button
-                    onClick={() => navigate("/sign-in")}
-                    className="auth-link"
-                >
-                    Sign In
-                </button>
-                <button
-                    onClick={() => navigate("/sign-up")}
-                    className="auth-link"
-                >
-                    Sign Up
-                </button>
-            </div>
         </header>
     );
 }

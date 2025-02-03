@@ -1,5 +1,6 @@
 import React from "react";
 import HeroSection from "../components/HeroSection";
+import Footer from "../components/Footer";
 
 function LocalHeroSection() {
     return (
@@ -13,6 +14,7 @@ function Home() {
         <div>
             <HeroSection />
             <LocalHeroSection />
+            <Footer />
         </div>
     );
 }
