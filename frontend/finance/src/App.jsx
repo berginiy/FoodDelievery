@@ -7,6 +7,7 @@ import Menu from "./pages/Menu";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import PersonalInfo from "./pages/PersonalInfo";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/order/:dishId" element={<OrderPage />} /> 
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/personal-info" element={<PersonalInfo />} />

@@ -44,3 +44,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+
+
+class Dish(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+
+
+class Order(models.Model):
+    customer_name = models.CharField(max_length=255)
+    address = models.TextField()
+    notes = models.TextField(blank=True, null=True)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

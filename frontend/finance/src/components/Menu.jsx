@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Menu.css'; // Подключение стилей
 
@@ -43,7 +44,7 @@ const Menu = () => {
                         <h3>{item.name}</h3>
                         <p>{item.description}</p>
                         <p>${item.price.toFixed(2)}</p>
-                        <button className="add-to-cart">+</button>
+                        <Link to={`/order/${item.id}`} className="add-to-cart">+</Link>
                     </div>
                 ))}
             </div>

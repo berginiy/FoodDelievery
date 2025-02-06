@@ -9,6 +9,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework import generics
+from .models import Order
+from .serializers import OrderSerializer
 
 from api.models import MenuItem
 from api.serializers import MenuItemSerializer, UserSerializer
@@ -101,3 +104,8 @@ class UploadPictureView(APIView):
             return Response({'message': 'Фото успешно загружено.'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Файл не загружен.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OrderCreateView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
