@@ -1,67 +1,51 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Menu.css";
 
-const MenuPage = () => {
-    const [menuItems, setMenuItems] = useState([]); // Данные из API
-    const [loading, setLoading] = useState(true);  // Состояние загрузки
-    const [error, setError] = useState(null);      // Состояние ошибок
+const Menu = () => {
+    const [menuItems, setMenuItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Получение данных из API
     useEffect(() => {
-        axios
-            .get("http://127.0.0.1:8000/api/menu/")
-            .then((response) => {
-                console.log(response.data);
-                const ids = response.data.map(dish => dish.id);
-                const uniqueIds = new Set(ids);
-                if (uniqueIds.size !== ids.length) {
-                    console.warn("Есть дубликаты ID!");
-                }
+        const fetchMenu = async () => {
+            try {
+                const response = await axios.get("/api/menu/");
                 setMenuItems(response.data);
                 setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Error fetching menu:", err);
-                setError("Failed to load menu. Try again later.");
+            } catch (error) {
+                console.error("Ошибка при загрузке меню:", error);
+                setError("Не удалось загрузить меню.");
                 setLoading(false);
-            });
+            }
+        };
+        fetchMenu();
     }, []);
 
+    if (loading) return <div className="loading-spinner">Загрузка меню...</div>;
+    if (error) return <div className="error-message">{error}</div>;
 
-    // Если идёт загрузка
-    if (loading) {
-        return <div className="menu-container">Loading menu...</div>;
-    }
-
-    // Если произошла ошибка
-    if (error) {
-        return <div className="menu-container error">{error}</div>;
-    }
-
-    // Отображение данных из API
     return (
         <div className="menu-container">
-            {menuItems.map((dish, index) => (
-                <div className="menu-card" key={index}>
-                    <img
-                        src={`http://127.0.0.1:8000${dish.image}`}
-                        alt={dish.name}
-                        className="menu-image"
-                    />
-                    <h3 className="menu-card-title">{dish.name}</h3>
-                    <p className="menu-description">{dish.description}</p>
-                    <p className="menu-price">
-                        {typeof dish.price === "number"
-                            ? `$${dish.price.toFixed(2)}`
-                            : dish.price}
-                    </p>
-                    <button className="menu-add-btn">+</button>
-                </div>
-            ))}
-
+            <h2 className="menu-title">Меню доставки</h2>
+            <div className="menu-grid">
+                {menuItems.map((item) => (
+                    <div className="menu-item" key={item.id}>
+                        <div className="menu-item-inner">
+                            <img src={item.image} alt={item.name} className="menu-image" />
+                            <h3>{item.name}</h3>
+                            <p>{item.description}</p>
+                            <p className="price">${parseFloat(item.price).toFixed(2)}</p>
+                            <Link to={`/order/${item.id}`} className="order-link">
+                                Заказать
+                            </Link>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
 
-export default MenuPage;
+export default Menu;

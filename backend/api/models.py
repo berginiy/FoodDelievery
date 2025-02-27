@@ -56,5 +56,5 @@ class Order(models.Model):
     customer_name = models.CharField(max_length=255)
     address = models.TextField()
     notes = models.TextField(blank=True, null=True)
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    dish = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

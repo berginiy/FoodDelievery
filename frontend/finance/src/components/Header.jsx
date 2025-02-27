@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "../styles/Header.css";
 
 function Header() {
-    const { user, logout } = useAuth();
+    const { user, signOut } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -16,7 +16,7 @@ function Header() {
                 {user ? (
                     <>
                         <Link to="/personal-info" className="nav-link">Personal Information</Link>
-                        <button className="log-out-button" onClick={logout}>Log Out</button>
+                        <button className="log-out-button" onClick={signOut}>Log Out</button>
                     </>
                 ) : (
                     <>

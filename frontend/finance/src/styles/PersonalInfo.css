@@ -1,44 +1,59 @@
-/* Стиль для контейнера личной информации */
+/* Основные стили */
 .personal-info {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f7fc;
+    background: linear-gradient(135deg, #f4f7fc, #e0e7ff);
     padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Контейнер для данных пользователя */
 .personal-info-container {
     background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 600px;
     text-align: center;
+    animation: fadeInUp 0.5s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.personal-info-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 /* Заголовок */
 .personal-info h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
     color: #333;
+    font-weight: 600;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInDown 0.5s ease-in-out;
 }
 
 /* Стиль для блоков с данными пользователя */
 .user-details {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .user-details p {
-    font-size: 1.1rem;
-    margin: 10px 0;
+    font-size: 1.2rem;
+    margin: 15px 0;
     color: #555;
+    line-height: 1.6;
 }
 
 .user-details strong {
     font-weight: 600;
+    color: #333;
 }
 
 /* Стиль для формы загрузки фото */
@@ -46,49 +61,100 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     width: 100%;
     text-align: left;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
-    font-size: 1rem;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
     color: #555;
+    font-weight: 500;
 }
 
 input[type="file"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #fafafa;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="file"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    outline: none;
 }
 
 /* Кнопка загрузки фото */
 .upload-button {
-    padding: 12px 20px;
+    padding: 14px 24px;
     background-color: #4CAF50;
     color: white;
     font-size: 1.1rem;
+    font-weight: 600;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .upload-button:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.upload-button:active {
+    transform: translateY(0);
 }
 
 /* Сообщение об ошибке */
 .error-message {
     color: #f44336;
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-top: 20px;
+    font-weight: 500;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

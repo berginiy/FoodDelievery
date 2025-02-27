@@ -34,14 +34,6 @@ const Footer = () => {
                     <p><i className="fas fa-envelope"></i> michelle.rivera@example.com</p>
                     <p><i className="fas fa-map-marker-alt"></i> 2715 Ash Dr. San Jose, South Dakota 83475</p>
                 </div>
-                <div className="footer-section subscribe">
-                    <h3>Subscribe</h3>
-                    <form>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <button type="submit" className="btn">Subscribe</button>
-                    </form>
-                </div>
             </div>
             <div className="footer-bottom">
                 <p>Copyright 2023 | Uitaskca - All rights Reserved</p>

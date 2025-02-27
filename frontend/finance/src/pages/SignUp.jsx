@@ -1,56 +1,55 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Register.css";
 
-const SignUp = () => {
-    const { signUp } = useAuth();  // Получаем функцию signUp из контекста
-    const [username, setUsername] = useState("");
+function SignUp() {
     const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const userData = {
-            username,
-            email,
-            password,
-        };
+        setError("");
 
         try {
-            const response = await fetch("http://localhost:8000/api/register/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(userData),
+            const response = await axios.post("http://localhost:8000/api/register/", {
+                username,
+                email,
+                password,
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("User signed up:", data);
-                signUp(userData);  // Используем функцию signUp из контекста
-            } else {
-                console.error("Error during registration");
+            if (response.status === 201) {
+                alert("Registration successful! Please sign in.");
+                navigate("/sign-in");
             }
-        } catch (error) {
-            console.error("Network error:", error);
+        } catch (err) {
+            console.error("Ошибка регистрации:", err.response?.data || err.message);
+            setError(
+                err.response?.data?.errors ||
+                err.response?.data?.detail ||
+                "Something went wrong. Please try again later."
+            );
         }
     };
 
     return (
-        <div className="signup">
+        <section className="signup">
             <div className="signup-container">
-                <h2>Sign Up</h2>
-                <form className="signup-form" onSubmit={handleSubmit}>
+                <h1>Sign Up</h1>
+                <form onSubmit={handleSubmit} className="signup-form">
+                    {error && <p className="error-message">{error}</p>}
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
                         <input
                             type="text"
                             id="username"
-                            placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Enter your username"
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -58,9 +57,10 @@ const SignUp = () => {
                         <input
                             type="email"
                             id="email"
-                            placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter your email"
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -68,18 +68,20 @@ const SignUp = () => {
                         <input
                             type="password"
                             id="password"
-                            placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter your password"
+                            required
                         />
                     </div>
-                    <button type="submit" className="signup-button">
-                        Sign Up
-                    </button>
+                    <button type="submit" className="signup-button">Sign Up</button>
+                    <p className="redirect-text">
+                        Already have an account? <a href="/sign-in">Sign In</a>
+                    </p>
                 </form>
             </div>
-        </div>
+        </section>
     );
-};
+}
 
 export default SignUp;
